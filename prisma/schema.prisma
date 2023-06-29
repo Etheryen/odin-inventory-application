@@ -10,6 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Widget {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+model Item {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  description String
+  price       Int
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String   @db.Uuid
+}
+
+model Category {
+  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  description String
+  items       Item[]
 }
