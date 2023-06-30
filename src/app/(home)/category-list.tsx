@@ -1,10 +1,8 @@
 import { ListItemLink } from '@/app/components/custom-ui/list-item-link';
-import { withAxios } from '@/app/util/axios';
-import { Category } from '@prisma/client';
+import { getAllCategories } from '@/app/lib/apiCalls';
 
 export async function CategoryList() {
-  const result = await withAxios.get('/api/categories');
-  const data = result.data as Category[];
+  const data = await getAllCategories();
 
   return (
     <ul className="flex justify-center flex-wrap gap-8 max-w-sm">
