@@ -6,13 +6,9 @@ export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const category = await prisma.category.findUnique({
-    where: { id: params.id },
+  const items = await prisma.item.findMany({
+    where: { categoryId: params.id },
   });
 
-  if (!category) {
-    throw new ApiError(404, 'Category not found');
-  }
-
-  return NextResponse.json(category);
+  return NextResponse.json(items);
 }

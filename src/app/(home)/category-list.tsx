@@ -1,17 +1,18 @@
+import { ListItemLink } from '@/app/components/custom-ui/list-item-link';
 import { withAxios } from '@/app/util/axios';
 import { Category } from '@prisma/client';
-import axios from 'axios';
-import Link from 'next/link';
 
-export default async function CategoryList() {
+export async function CategoryList() {
   const result = await withAxios.get('/api/categories');
   const data = result.data as Category[];
 
   return (
-    <ul>
+    <ul className="flex justify-center flex-wrap gap-8 max-w-sm">
       {data.map((category) => (
         <li key={category.id}>
-          <Link href={`/categories/${category.id}`}>{category.name}</Link>
+          <ListItemLink href={`/categories/${category.id}`}>
+            {category.name}
+          </ListItemLink>
         </li>
       ))}
     </ul>

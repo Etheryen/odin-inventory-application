@@ -1,14 +1,21 @@
 import '@/app/globals.css';
 import { Inter } from 'next/font/google';
-import { ThemeProvider } from '../components/theme-provider';
+import { ThemeProvider } from '@/app/components/theme-provider';
 import { Navbar } from '@/app/components/navbar';
+import { Item } from '@prisma/client';
+import { withAxios } from '@/app/util/axios';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
-  title: 'Inventory Application',
-  description: 'Inventory Application project from The Odin Project curriculum',
-};
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const result = await withAxios.get(`/api/items/${params.id}`);
+  const data = result.data as Item;
+
+  return {
+    title: data.name + ' page',
+    description: data.description,
+  };
+}
 
 export default function RootLayout({
   children,
