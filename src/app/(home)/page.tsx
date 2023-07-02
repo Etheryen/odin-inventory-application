@@ -1,5 +1,7 @@
 import { CategoryList } from './category-list';
 
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   return (
     <main className="space-y-16">

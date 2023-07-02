@@ -8,7 +8,9 @@ export async function CategoryList() {
 
   if (data.length === 0)
     return (
-      <div className="opacity-50 text-2xl font-extralight">No items found</div>
+      <div className="opacity-50 text-2xl font-extralight">
+        No categories found
+      </div>
     );
 
   return (
