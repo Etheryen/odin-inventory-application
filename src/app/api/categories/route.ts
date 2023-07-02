@@ -1,5 +1,4 @@
 import { prisma } from '@/app/util/prisma';
-import { redirect } from 'next/dist/server/api-utils';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -14,6 +13,9 @@ interface CategoryPostRequestType {
 
 export async function POST(request: Request) {
   const body: CategoryPostRequestType = await request.json();
-  const newCategory = await prisma.category.create({ data: body });
-  return redirect;
+  const newCategory = await prisma.category.create({
+    data: body,
+    select: { id: true },
+  });
+  return NextResponse.json({ id: newCategory.id });
 }
