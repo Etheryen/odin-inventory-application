@@ -1,11 +1,11 @@
 import { Button } from '@/app/components/ui/button';
-import { withAxios } from '@/app/util/axios';
+import { baseURL } from '@/app/util/baseUrl';
 import { formatPrice } from '@/app/util/formatting';
 import { Item } from '@prisma/client';
 
 export default async function ItemPage({ params }: { params: { id: string } }) {
-  const result = await withAxios.get(`/api/items/${params.id}`);
-  const data = result.data as Item;
+  const result = await fetch(`${baseURL}/api/items/${params.id}`);
+  const data: Item = await result.json();
 
   const formattedPrice = formatPrice(data.price);
 

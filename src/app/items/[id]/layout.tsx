@@ -3,13 +3,13 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/app/components/theme-provider';
 import { Navbar } from '@/app/components/navbar';
 import { Item } from '@prisma/client';
-import { withAxios } from '@/app/util/axios';
+import { baseURL } from '@/app/util/baseUrl';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const result = await withAxios.get(`/api/items/${params.id}`);
-  const data = result.data as Item;
+  const result = await fetch(`${baseURL}/api/items/${params.id}`);
+  const data: Item = await result.json();
 
   return {
     title: data.name + ' page',

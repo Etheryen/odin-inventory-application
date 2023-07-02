@@ -1,5 +1,5 @@
 import { ListItemLink } from '@/app/components/custom-ui/list-item-link';
-import { withAxios } from '@/app/util/axios';
+import { baseURL } from '@/app/util/baseUrl';
 import { formatPrice } from '@/app/util/formatting';
 import { Item } from '@prisma/client';
 
@@ -8,10 +8,10 @@ interface ItemListProps {
 }
 
 export async function ItemList(props: ItemListProps) {
-  const result = await withAxios.get(
-    `/api/categories/${props.categoryId}/items`
+  const result = await fetch(
+    `${baseURL}/api/categories/${props.categoryId}/items`
   );
-  const data = result.data as Item[];
+  const data: Item[] = await result.json();
 
   const itemsWithRightPrices = data.map((item) => {
     return { ...item, price: formatPrice(item.price) };

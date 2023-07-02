@@ -1,15 +1,15 @@
-import { withAxios } from '@/app/util/axios';
 import { Category, Item } from '@prisma/client';
 import { ItemList } from './item-list';
+import { baseURL } from '@/app/util/baseUrl';
 
 export default async function CategoryPage({
   params,
 }: {
   params: { id: number };
 }) {
-  const result = await withAxios.get(`/api/categories/${params.id}`);
+  const result = await fetch(`${baseURL}/api/categories/${params.id}`);
 
-  const data = result.data as Category;
+  const data: Category = await result.json();
 
   return (
     <main className="space-y-16">

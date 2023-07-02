@@ -1,10 +1,10 @@
 import { ListItemLink } from '@/app/components/custom-ui/list-item-link';
-import { withAxios } from '../util/axios';
 import { Category } from '@prisma/client';
+import { baseURL } from '../util/baseUrl';
 
 export async function CategoryList() {
-  const result = await withAxios.get('/api/categories');
-  const data = result.data as Category[];
+  const result = await fetch(`${baseURL}/api/categories`);
+  const data: Category[] = await result.json();
 
   if (data.length === 0)
     return (
