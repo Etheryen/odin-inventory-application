@@ -1,14 +1,12 @@
 'use client';
 
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
-import { Button } from '@/app/components/ui/button';
-import { redirect } from 'next/navigation';
-import { baseURL } from '@/app/util/baseUrl';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 const categorySchema = z.object({
   name: z.string().min(2).max(30),
