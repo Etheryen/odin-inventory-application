@@ -7,18 +7,26 @@ export default async function CategoryPage({
 }: {
   params: { id: number };
 }) {
-  const result = await fetch(`${baseURL}/api/categories/${params.id}`);
+  const [categoryResult, itemsResult] = await Promise.all([
+    fetch(`${baseURL}/api/categories/${params.id}`),
+    fetch(`${baseURL}/api/categories/${params.id}/items`, {
+      cache: 'no-cache',
+    }),
+  ]);
 
-  const data: Category = await result.json();
+  const [category, items] = await Promise.all([
+    categoryResult.json() as Promise<Category>,
+    itemsResult.json() as Promise<Item[]>,
+  ]);
 
   return (
     <main className="space-y-16">
       <div className="space-y-12 p-8">
-        <div className="text-6xl font-black text-center">{data.name}</div>
-        <div className="text-2xl text-center">{data.description}</div>
+        <div className="text-6xl font-black text-center">{category.name}</div>
+        <div className="text-2xl text-center">{category.description}</div>
       </div>
       <div className="flex justify-center">
-        <ItemList categoryId={data.id} />
+        <ItemList items={items} />
       </div>
     </main>
   );

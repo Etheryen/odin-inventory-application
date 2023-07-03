@@ -3,27 +3,18 @@ import { baseURL } from '@/app/util/baseUrl';
 import { formatPrice } from '@/app/util/formatting';
 import { Item } from '@prisma/client';
 
-interface ItemListProps {
-  categoryId: string;
-}
-
-export async function ItemList(props: ItemListProps) {
-  const result = await fetch(
-    `${baseURL}/api/categories/${props.categoryId}/items`
-  );
-  const data: Item[] = await result.json();
-
-  const itemsWithRightPrices = data.map((item) => {
+export async function ItemList({ items }: { items: Item[] }) {
+  const itemsWithRightPrices = items.map((item) => {
     return { ...item, price: formatPrice(item.price) };
   });
 
-  if (data.length === 0)
+  if (items.length === 0)
     return (
       <div className="opacity-50 text-2xl font-extralight">No items found</div>
     );
 
   return (
-    <ul>
+    <ul className="flex justify-center flex-wrap gap-8 max-w-sm">
       {itemsWithRightPrices.map((item) => (
         <li key={item.id}>
           <ListItemLink href={`/items/${item.id}`}>
