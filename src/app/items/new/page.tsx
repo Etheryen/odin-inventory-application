@@ -133,7 +133,7 @@ const NewItemForm = ({ categories }: { categories: Category[] }) => {
 };
 
 export default async function NewItemPage() {
-  const result = await fetch(`http://localhost:3000/api/categories`);
+  const result = await fetch(`${baseURL}/api/categories`);
   const data: Category[] = await result.json();
 
   return (

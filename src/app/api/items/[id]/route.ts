@@ -16,3 +16,12 @@ export async function GET(
 
   return NextResponse.json(item);
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  await prisma.item.delete({ where: { id: params.id } });
+
+  return NextResponse.json({ message: 'deleted successfully' });
+}

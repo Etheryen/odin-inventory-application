@@ -1,5 +1,4 @@
 import { ListItemLink } from '@/app/components/custom-ui/list-item-link';
-import { baseURL } from '@/app/util/baseUrl';
 import { formatPrice } from '@/app/util/formatting';
 import { Item } from '@prisma/client';
 
