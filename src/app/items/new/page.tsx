@@ -132,7 +132,7 @@ const NewItemForm = ({ categories }: { categories: Category[] }) => {
   );
 };
 
-export default async function NewItemPage() {
+const NewItemPage = async () => {
   const result = await fetch(`${baseURL}/api/categories`);
   const data: Category[] = await result.json();
 
@@ -144,4 +144,6 @@ export default async function NewItemPage() {
       </div>
     </main>
   );
-}
+};
+
+export default NewItemPage;
