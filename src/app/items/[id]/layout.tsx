@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/app/components/theme-provider';
 import { Navbar } from '@/app/components/navbar';
 import { Item } from '@prisma/client';
 import { baseURL } from '@/app/util/baseUrl';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,9 +27,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="min-h-screen">
+          <div className="min-h-screen flex-col flex">
             <Navbar />
             {children}
+            <Toaster position="bottom-center" />
           </div>
         </ThemeProvider>
       </body>
