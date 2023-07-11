@@ -1,5 +1,9 @@
 # odin-inventory-application
 
+A full stack web app for an online skateboard parts shop built with Next.js App Router, Prisma, TailwindCSS, react-hook-form, zod, and react-hot-toast for toasts. Styled using shadcn/ui library.
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
