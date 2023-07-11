@@ -28,13 +28,7 @@ type CategoryFormProps =
     };
 
 export const CategoryForm = ({ action, category }: CategoryFormProps) => {
-  const defaultValues =
-    action === 'update'
-      ? {
-          name: category.name,
-          description: category.description,
-        }
-      : {};
+  const defaultValues = action === 'update' ? category : {};
 
   const {
     register,

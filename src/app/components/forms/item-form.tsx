@@ -14,7 +14,7 @@ import {
 } from '@/app/components/ui/select';
 import { baseURL } from '@/app/util/baseUrl';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Category } from '@prisma/client';
+import { Category, Item } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -28,12 +28,20 @@ const itemSchema = z.object({
 
 type ItemSchema = z.infer<typeof itemSchema>;
 
-interface ItemFormProps {
-  categories: Category[];
-  action: 'add' | 'update';
-}
+type ItemFormProps = { categories: Category[] } & (
+  | {
+      action: 'add';
+      item?: undefined;
+    }
+  | {
+      action: 'update';
+      item: Item;
+    }
+);
 
-export const ItemForm = ({ categories, action }: ItemFormProps) => {
+export const ItemForm = ({ categories, action, item }: ItemFormProps) => {
+  const defaultValues = action === 'update' ? item : {};
+
   const {
     register,
     handleSubmit,
@@ -41,6 +49,7 @@ export const ItemForm = ({ categories, action }: ItemFormProps) => {
     formState: { errors },
   } = useForm<ItemSchema>({
     resolver: zodResolver(itemSchema),
+    defaultValues,
   });
 
   const router = useRouter();
@@ -54,7 +63,16 @@ export const ItemForm = ({ categories, action }: ItemFormProps) => {
       const responseData: { id: string } = await result.json();
       router.push(`/items/${responseData.id}`);
     },
-    update: async (newItem: ItemSchema) => {},
+    update: async (updatedItem: ItemSchema) => {
+      if (action !== 'update') return;
+
+      const result = await fetch(`${baseURL}/api/items/${item.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(updatedItem),
+      });
+      const responseData: { id: string } = await result.json();
+      router.push(`/items/${responseData.id}`);
+    },
   };
 
   const onSubmit: SubmitHandler<ItemSchema> = actions[action];

@@ -49,6 +49,7 @@ export async function PUT(
   });
 
   revalidatePath(`/items/[id]`);
+  revalidatePath(`/items`);
   revalidatePath(`/categories/[id]/items`);
   return NextResponse.json({ id: updatedItem.id });
 }
