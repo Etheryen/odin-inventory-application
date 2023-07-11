@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Category } from '@prisma/client';
+import { baseURL } from '@/app/util/baseUrl';
 
 const categorySchema = z.object({
   name: z.string().min(2).max(60),
@@ -48,7 +49,7 @@ export const CategoryForm = ({ action, category }: CategoryFormProps) => {
 
   const actions = {
     add: async (newCategory: CategorySchema) => {
-      const result = await fetch('/api/categories', {
+      const result = await fetch(`${baseURL}/api/categories`, {
         method: 'POST',
         body: JSON.stringify(newCategory),
       });
@@ -58,7 +59,7 @@ export const CategoryForm = ({ action, category }: CategoryFormProps) => {
     update: async (updatedCategory: CategorySchema) => {
       if (action !== 'update') return;
 
-      const result = await fetch(`/api/categories/${category.id}`, {
+      const result = await fetch(`${baseURL}/api/categories/${category.id}`, {
         method: 'PUT',
         body: JSON.stringify(updatedCategory),
       });

@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/ui/select';
+import { baseURL } from '@/app/util/baseUrl';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Category } from '@prisma/client';
 import { useRouter } from 'next/navigation';
@@ -46,7 +47,7 @@ export const ItemForm = ({ categories, action }: ItemFormProps) => {
 
   const actions = {
     add: async (newItem: ItemSchema) => {
-      const result = await fetch('/api/items', {
+      const result = await fetch(`${baseURL}/api/items`, {
         method: 'POST',
         body: JSON.stringify(newItem),
       });
