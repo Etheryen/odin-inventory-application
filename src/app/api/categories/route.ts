@@ -18,6 +18,6 @@ export async function POST(request: Request) {
     data: body,
     select: { id: true },
   });
-  revalidatePath('/categories');
+  revalidatePath('/');
   return NextResponse.json({ id: newCategory.id });
 }

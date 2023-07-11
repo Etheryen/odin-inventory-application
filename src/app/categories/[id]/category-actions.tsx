@@ -2,6 +2,7 @@
 
 import { Button } from '@/app/components/ui/button';
 import { baseURL } from '@/app/util/baseUrl';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
@@ -32,7 +33,9 @@ export function CategoryActions({ categoryId }: { categoryId: string }) {
 
   return (
     <>
-      <Button variant={'secondary'}>Update</Button>
+      <Button variant={'secondary'} asChild>
+        <Link href={`/categories/${categoryId}/update`}>Update</Link>
+      </Button>
       <Button onClick={handleDelete} variant={'destructive'}>
         Delete
       </Button>

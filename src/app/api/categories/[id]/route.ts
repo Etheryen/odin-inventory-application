@@ -1,4 +1,5 @@
 import { prisma } from '@/app/util/prisma';
+import { revalidatePath } from 'next/cache';
 import { ApiError } from 'next/dist/server/api-utils';
 import { NextResponse } from 'next/server';
 
@@ -32,4 +33,28 @@ export async function DELETE(
   await prisma.category.delete({ where: { id: params.id } });
 
   return NextResponse.json({ message: 'deleted successfully' });
+}
+
+interface CategoryPutRequestType {
+  name: string;
+  description: string;
+}
+
+export async function PUT(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const body: CategoryPutRequestType = await request.json();
+
+  const updatedCategory = await prisma.category.update({
+    where: {
+      id: params.id,
+    },
+    data: body,
+    select: { id: true },
+  });
+
+  revalidatePath('/categories/[id]');
+  revalidatePath('/');
+  return NextResponse.json({ id: updatedCategory.id });
 }

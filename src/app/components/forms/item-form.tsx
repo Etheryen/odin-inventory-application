@@ -19,20 +19,20 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const itemSchema = z.object({
-  name: z.string().min(2).max(30),
-  description: z.string().min(2).max(60),
+  name: z.string().min(2).max(60),
+  description: z.string().min(2).max(128),
   price: z.number().positive(),
   categoryId: z.string(),
 });
 
 type ItemSchema = z.infer<typeof itemSchema>;
 
-interface NewItemFormProps {
+interface ItemFormProps {
   categories: Category[];
   action: 'add' | 'update';
 }
 
-export const NewItemForm = ({ categories, action }: NewItemFormProps) => {
+export const ItemForm = ({ categories, action }: ItemFormProps) => {
   const {
     register,
     handleSubmit,

@@ -1,4 +1,4 @@
-import { NewItemForm } from '@/app/components/forms/item-form';
+import { ItemForm } from '@/app/components/forms/item-form';
 import { baseURL } from '@/app/util/baseUrl';
 import { Category } from '@prisma/client';
 
@@ -12,7 +12,7 @@ const NewItemPage = async () => {
     <main className="space-y-16">
       <div className="text-6xl font-black text-center p-8">New item</div>
       <div className="flex justify-center">
-        <NewItemForm categories={data} action="add" />
+        <ItemForm categories={data} action="add" />
       </div>
     </main>
   );

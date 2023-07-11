@@ -21,6 +21,6 @@ export async function POST(request: Request) {
     data: body,
     select: { id: true },
   });
-  revalidatePath(`/categories/${body.categoryId}/items`);
+  revalidatePath(`/categories/[id]/items`);
   return NextResponse.json({ id: newItem.id });
 }
